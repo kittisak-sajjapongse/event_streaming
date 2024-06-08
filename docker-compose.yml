@@ -1,0 +1,27 @@
+version: "3.2"
+
+networks:
+  event_streaming_network:
+    name: event_streaming_network
+    driver: bridge
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    networks:
+      - event_streaming_network
+    ports:
+      - 6379:6379
+    restart: always
+
+  redis_gui:
+    image: redis/redisinsight:latest
+    container_name: redis_gui
+    networks:
+      - event_streaming_network
+    ports:
+      - 5540:5540
+    volumes:
+      - ./container_data/redisinsight:/data
+    restart: always
